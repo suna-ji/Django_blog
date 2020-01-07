@@ -33,13 +33,25 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    #앱 
     'user',
     'post',
+
+    # allauth 
+    'allauth', 
+    'allauth.account',
+    'allauth.socialaccount',
+    # provider
+    'allauth.socialaccount.providers.google',
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -115,12 +127,21 @@ USE_L10N = True
 
 USE_TZ = True
 
+AUTHENTICATION_BACKENDS =(
+    # Needed to login by username in Django admin, regardless of 'allauth'
+    'django.contrib.auth.backends.ModelBackend',
+    # 'allauth' specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+    
+)#소괄호 -> 튜플임
+
+
 AUTH_USER_MODEL = "user.User"
-ACCOUNT_ALLOW_REGISTRATION = True
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
-LOGIN_REDIRECT_URL = 'home'
-LOGIN_URL = 'account_login'
+LOGIN_REDIRECT_URL = '/'
+
+
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
