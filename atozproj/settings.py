@@ -68,7 +68,7 @@ ROOT_URLCONF = 'atozproj.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')], #템플릿 상속
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates', 'allauth')], #템플릿 상속
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
