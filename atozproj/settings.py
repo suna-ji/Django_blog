@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
 
 # Application definition
 
@@ -47,8 +49,17 @@ INSTALLED_APPS = [
     'allauth', 
     'allauth.account',
     'allauth.socialaccount',
+    
     # provider
     'allauth.socialaccount.providers.google',
+    
+    # tag
+    'tagging.apps.TaggingConfig',
+    'taggit',
+    'taggit_templatetags2', #태그 클라우드에 사용
+
+    # crispy_form
+    'crispy_forms',
 ]
 
 
@@ -140,9 +151,6 @@ AUTH_USER_MODEL = "user.User"
 LOGIN_REDIRECT_URL = '/'
 
 
-
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -151,3 +159,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'atozproj', 'static')
 ]
+
+# 미디어 루트
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'atozproj', 'media')
+
+TAGGTI_CASE_INTENSIVE  = True # 대소문자 구분안함
+TAGGIT_LIMIT = 50 #태그 클라우드에 나타나는 갯수 제한

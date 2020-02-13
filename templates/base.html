@@ -3,18 +3,19 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <title>Andrea - Free Bootstrap 4 Template by Colorlib</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
-    
+
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
@@ -26,72 +27,170 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
     <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
 
-    
+
     <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
     <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  </head>
-  <body>
 
-	<div id="colorlib-page">
-		<a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
-		<aside id="colorlib-aside" role="complementary" class="js-fullheight">
-			<nav id="colorlib-main-menu" role="navigation">
-				<ul>
-					<li class="colorlib-active"><a href="index.html">블로그홈</a></li>
-					<li><a href="fashion.html">일상</a></li>
-					<li><a href="travel.html">여행</a></li>
-					<li><a href="about.html">또나</a></li>
-					<li><a href="contact.html">문의</a></li>
-                    <li><a href = "accounts/signup">회원가입</a></li>
+</head>
+
+<body>
+    <div id="colorlib-page">
+        <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+        <aside id="colorlib-aside" role="complementary" class="js-fullheight">
+            <nav id="colorlib-main-menu" role="navigation">
+                <ul>
+                    <li class="colorlib-active"><a href="{% url 'index' %}">블로그홈</a></li>
+                    <li><a href="#">일상</a></li>
+                    <li><a href="#">여행</a></li>
+                    <li><a href="{% url 'new' %}">글쓰기</a></li> <!-- post/new가 아닌이유: url에서 name을 new로 설정했기때문 -->
                     {% if user.is_authenticated %}
-                    <li><a href = "accounts/logout">로그아웃</a></li>
+                    <li><a href="accounts/logout">로그아웃</a></li>
                     {{user.username}}님 반갑습니다!
                     {% else %}
-                    <li><a href = "{% provider_login_url 'google' %}">구글 로그인</a></li>
+                    <li><a href="accounts/signup">회원가입</a></li>
+                    <li><a href="accounts/login">로그인</a></li>
+                    <li><a href="{% provider_login_url 'google' %}">구글 로그인</a></li>
                     로그인 해주세요!
                     {% endif %}
-				</ul>
-			</nav>
-			
+                </ul>
+            </nav>
 
-			<div class="colorlib-footer">
-				<h2 id="colorlib-logo" class="mb-4"><a href="https://blog.naver.com/pooyo970314" style="background-image: url(static/images/bg_1.jpg);">또나의 <span style = "word-break: keep-all;">일상블로그</span></a></h2>
-				<div class="mb-4">
-					<h3 style = "font-family: 'silgothic'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/silgothic.woff') format('woff'); font-weight: normal; font-style: normal;">이 블로그를 구독해보세요!</h3>
-					<form action="#" class="colorlib-subscribe-form">
-						<div class="form-group d-flex">
-							<div class="icon"><span class="icon-paper-plane"></span></div>
-						<input type="text" class="form-control" placeholder="이메일을 입력하세요!">
-						</div>
-					</form>
-				</div>
-			</div>
-		</aside> <!-- END COLORLIB-ASIDE -->
+            <div class="colorlib-footer">
+                <h2 id="colorlib-logo" class="mb-4"><a href="https://blog.naver.com/pooyo970314"
+                        style="background-image: url(static/images/bg_1.jpg);">또나의 <span
+                            style="word-break: keep-all;">일상블로그</span></a></h2>
+                <div class="mb-4">
+                    <h3
+                        style="font-family: 'silgothic'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/silgothic.woff') format('woff'); font-weight: normal; font-style: normal;">
+                        이 블로그를 구독해보세요!</h3>
+                    <form action="#" class="colorlib-subscribe-form">
+                        <div class="form-group d-flex">
+                            <div class="icon"><span class="icon-paper-plane"></span></div>
+                            <input type="text" class="form-control" placeholder="이메일을 입력하세요!">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </aside> <!-- END COLORLIB-ASIDE -->
+        <div id="colorlib-main">
+            <section class="ftco-section ftco-no-pt ftco-no-pb">
+                <div class="container">
+                    <div class="row d-flex">
+                        {% block content %}
+                        {% endblock %}
+                        {% block js %}
+                        {% endblock js %}
+                        <!-- 오른쪽 페이지 -->
+                        <div class="col-xl-4 sidebar ftco-animate bg-light pt-5">
+                            <div class="sidebar-box pt-md-4">
+                                <form action="#" class="search-form">
+                                    <div class="form-group">
+                                        <span class="icon icon-search"></span>
+                                        <input type="text" class="form-control"
+                                            placeholder="Type a keyword and hit enter">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="sidebar-box ftco-animate">
+                                <h3 class="sidebar-heading">Categories</h3>
+                                <ul class="categories">
+                                    <li><a href="#">Fashion <span>(6)</span></a></li>
+                                    <li><a href="#">Technology <span>(8)</span></a></li>
+                                    <li><a href="#">Travel <span>(2)</span></a></li>
+                                    <li><a href="#">Food <span>(2)</span></a></li>
+                                    <li><a href="#">Photography <span>(7)</span></a></li>
+                                </ul>
+                            </div>
+                            <div class="sidebar-box ftco-animate">
+                                <h3 class="sidebar-heading">Popular Articles</h3>
+                                <div class="block-21 mb-4 d-flex">
+                                    <a class="blog-img mr-4" style="background-image: url(images/image_1.jpg);"></a>
+                                    <div class="text">
+                                        <h3 class="heading"><a href="#">Even the all-powerful Pointing has no
+                                                control</a></h3>
+                                        <div class="meta">
+                                            <div><a href="#"><span class="icon-calendar"></span> June 28, 2019</a></div>
+                                            <div><a href="#"><span class="icon-person"></span> Dave Lewis</a></div>
+                                            <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-        {% block content %}
-        {% endblock %}
-	</div><!-- END COLORLIB-PAGE -->
+                            <div class="sidebar-box ftco-animate">
+                                <h3 class="sidebar-heading">Tag Cloud</h3>
+                                <ul class="tagcloud">
+                                    {% load taggit_templatetags2_tags %}
+                                    {% get_tagcloud as tags %}
+                                    {% for tag in tags %}
+                                    <a href="{% url 'tagged_post_list' tag.name %}" class="tag-cloud-link tag-{{tag.weight|floatformat:0}}">{{tag.name}}({{tag.num_times}})</a>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <!-- 뉴스레터 -->
+                            <div class="sidebar-box subs-wrap img py-4" style="background-image: url(images/bg_1.jpg);">
+                                <div class="overlay"></div>
+                                <h3 class="mb-4 sidebar-heading">Newsletter</h3>
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia
+                                </p>
+                                <form action="#" class="subscribe-form">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Email Address">
+                                        <input type="submit" value="Subscribe" class="mt-2 btn btn-white submit">
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- 어치브 -->
+                            <div class="sidebar-box ftco-animate">
+                                <h3 class="sidebar-heading">Archives</h3>
+                                <ul class="categories">
+                                    <li><a href="#">Decob14 2018 <span>(10)</span></a></li>
+                                    <li><a href="#">September 2018 <span>(6)</span></a></li>
+                                    <li><a href="#">August 2018 <span>(8)</span></a></li>
+                                    <li><a href="#">July 2018 <span>(2)</span></a></li>
+                                    <li><a href="#">June 2018 <span>(7)</span></a></li>
+                                    <li><a href="#">May 2018 <span>(5)</span></a></li>
+                                </ul>
+                            </div>
+                            <!-- 페러그랩 -->
+                            <div class="sidebar-box ftco-animate">
+                                <h3 class="sidebar-heading">Paragraph</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem
+                                    necessitatibus voluptate quod mollitia delectus aut.</p>
+                            </div>
+                        </div><!-- END COL -->
+                    </div>
+                </div>
+            </section>
+        </div><!-- END COLORLIB-MAIN -->
+    </div><!-- END COLORLIB-PAGE -->
 
-  <!-- loader -->
-  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00" /></svg></div>
 
 
-  <script src="{% static 'js/jquery.min.js' %}"></script>
-  <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
-  <script src="{% static 'js/popper.min.js' %}"></script>
-  <script src="{% static 'js/bootstrap.min.js' %}"></script>
-  <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
-  <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
-  <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
-  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-  <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-  <script src="{% static 'js/aos.js' %}"></script>
-  <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
-  <script src="{% static 'js/scrollax.min.js' %}"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="{% static 'js/google-map.js' %}"></script>
-  <script src="{% static 'js/main.js' %}"></script>
-    
-  </body>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/aos.js' %}"></script>
+    <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+    <script src="{% static 'js/scrollax.min.js' %}"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="{% static 'js/google-map.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="src/tagcloud.jquery.js"></script>
+</body>
+
 </html>

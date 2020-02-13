@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="col-xl-8 px-md-5 py-5">
+    <div class="row pt-md-4">
+        {% for post in object_list %}
+        <div class="col-md-12">
+            <div class="blog-entry-2 ftco-animate">
+                <img src = "{{post.image.url}}" class ="img" alt ="포스팅사진">    
+                <div class="text pt-4">
+                    <h3 class="mb-4"><a href="#">{{post.title}}</a></h3>
+                    <p class="mb-4">{{post.content}}</p>
+                    <ul class="tagcloud">
+                        {% load taggit_templatetags2_tags %}
+                        {% get_tags_for_object post as "tags" %}
+                        {% for tag in tags %}
+                        <a href = "{% url 'tagged_post_list' tag.name %}">{{tag.name}}</a>
+                        {% endfor %}
+                    </ul>
+                    <div class="author mb-4 d-flex align-items-center">
+                        <img src = "{{post.user.image.url}}"  class ="img">
+                        <div class="ml-3 info">
+                            <span>Written by</span>
+                            <h3><a href="#">{{post.user}}</a>, <span>{{post.date}}</span></h3>
+                        </div>
+                    </div>
+                    <div class="meta-wrap d-md-flex align-items-center">
+                        <div class="half order-md-last text-md-right">
+                            <p class="meta">
+                                <span><i class="icon-heart"></i>3</span>
+                                <span><i class="icon-eye"></i>100</span>
+                                <span><i class="icon-comment"></i>5</span>
+                            </p>
+                        </div>
+                        <div class="half"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div><!-- END-->
+</div>
+{% endblock%}

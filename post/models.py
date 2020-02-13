@@ -1,10 +1,51 @@
 from django.db.models import *
 from django.db import models
 from user.models import User 
+from django.utils.translation import gettext as _
+from taggit.managers import TaggableManager
+from taggit.models import (
+    TagBase,  # Allows custom Tag models and ForeignKeys to models.
+    TaggedItemBase #Allows custom ForeignKeys to models.
+)
 
 
-class Tag(models.Model):
-    text = CharField(max_length = 50)
+class PostTag(TagBase):
+    slug = models.SlugField(
+        verbose_name = _('slug'),
+        unique=True,
+        max_length=100,
+        allow_unicode=True,
+    )
+
+    class Meta:
+        verbose_name = _("tag"),
+        verbose_name_plural = _("tags")
+
+    def slugify(self, tag, i=None):
+        return default_slugify(tag, allow_unicode=True)
+
+
+
+
+
+
+class TaggedPost(TaggedItemBase):
+    content_object = models.ForeignKey(
+        'Post',
+        on_delete = models.CASCADE,
+    )
+
+    tag = models.ForeignKey(
+        'PostTag',
+        related_name = "%(app_label)s_%(class)s_items",
+        on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        verbose_name = _("tagged post")
+        verbose_name_plural = _("tagged posts")
+
+
 
 class Post(models.Model):
     title = CharField(max_length = 100)
@@ -15,7 +56,9 @@ class Post(models.Model):
     view_count = IntegerField(default = 0)
     star_rating = IntegerField(default = 0)
     user = ForeignKey(User, on_delete = CASCADE)
-    tag = models.ManyToManyField(Tag, blank = True)
+    tags = TaggableManager(
+         help_text=_('콤마를 기준으로 태그가 설정됩니다!'),
+    )
 
     def __str__(self):
         return self.title
@@ -27,6 +70,9 @@ class Post(models.Model):
 
 
 
+
+
+
 class Comment(models.Model):
     user = ForeignKey(User, on_delete = CASCADE)
     post = ForeignKey(Post, on_delete = CASCADE)
@@ -34,7 +80,7 @@ class Comment(models.Model):
     
 
     def __str__(self):
-        return self.content
+        return self.co1ntent
 
 
 

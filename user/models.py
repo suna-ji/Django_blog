@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _ #장고에서 제공하�
 # 3. AbstractBaseUser: 완전한 새로운 User모델을 만들때 사용
 # 4. AbstractUser: 기존의 User 모델을 사용하되, 추가적인 정보를 더 넣고 싶을때 사용, 2번은 추가로 클래스를 생성하지만 이 방법의 경우 추가로 클래스를 생성하지는 않음
 class User(AbstractUser):
-    image = ImageField(_("Image of User"), upload_to =  "img/", default="none/default_profile.jpg")
+    image = ImageField(_("Image of User"), upload_to = "img/", default="img/basic.png")
     name = CharField(max_length = 30)
 
 # 나중에 그거 뭐지 사진 동그랗게 위치 조정하는거 구현하기!!
